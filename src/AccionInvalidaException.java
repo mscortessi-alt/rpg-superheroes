@@ -1,8 +1,6 @@
-/**
- * Excepción personalizada del juego. Se lanza cuando el jugador intenta algo
- * no permitido: opción de menú fuera de rango, usar un ítem que no tiene,
- * o usar el superpoder sin energía suficiente.
- */
+// Excepcion propia del juego.
+// La usamos cuando el jugador hace algo que no se puede: poner una letra en el menu,
+// usar el poder sin energia, buscar un item que no tiene, comprar sin plata, etc.
 public class AccionInvalidaException extends Exception {
 
     public AccionInvalidaException(String mensaje) {

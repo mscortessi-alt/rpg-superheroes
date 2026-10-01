@@ -15,3 +15,6 @@ nbproject/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Ranking local de partidas
+ranking.txt

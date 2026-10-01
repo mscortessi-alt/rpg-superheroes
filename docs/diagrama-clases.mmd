@@ -1,0 +1,275 @@
+---
+title: Diagrama de clases UML — "La UPA fue tomada" · RPG por turnos de Superhéroes · Grupo 8
+---
+classDiagram
+    direction TB
+
+    class Main {
+        +main(args: String[])$ void
+    }
+
+    class Juego {
+        -consola: Consola
+        -ranking: Ranking
+        -tienda: Tienda
+        -heroe: Heroe
+        -jugador: String
+        -recorrido: Queue~Parada~
+        -villanosVencidos: int
+        +iniciar() void
+        -jugarPartida() void
+        -elegirHeroe() Heroe
+        -armarRecorrido() void
+        -terminarPartida(victoria: boolean) void
+        -calcularPuntaje(victoria: boolean) int
+    }
+
+    class Consola {
+        -scanner: Scanner
+        +leerTexto(mensaje: String) String
+        +leerOpcion(min: int, max: int) int
+        +leerOpcionValida(min: int, max: int) int
+        +mostrarError(mensaje: String) void
+        +pausa() void
+    }
+
+    class Dado {
+        -RANDOM: Random$
+        +chance(porcentaje: int)$ boolean
+        +entre(min: int, max: int)$ int
+    }
+
+    class AccionInvalidaException {
+        +AccionInvalidaException(mensaje: String)
+    }
+    class Exception
+
+    class Parada {
+        -lugar: String
+        -historia: String
+        -textoFinal: String
+        -villanos: ArrayList~Villano~
+        +agregarVillano(v: Villano) void
+    }
+
+    class Combate {
+        +SIGUE: int$
+        +GANADO: int$
+        +PERDIDO: int$
+        +HUIDO: int$
+        -heroe: Heroe
+        -enemigos: ArrayList~Villano~
+        -consola: Consola
+        -ronda: int
+        +iniciar() int
+        -jugarRonda() int
+        -turnoHeroe() boolean
+        -atacar() void
+        -usarPoder() void
+        -usarItem() void
+        -elegirObjetivo() Villano
+        -revisarDerrotados() void
+        +getEnemigosVivos() ArrayList~Villano~
+    }
+
+    class Tienda {
+        -productos: ArrayList~Item~
+        +ordenarPorPrecio() void
+        +comprar(numero: int, heroe: Heroe) void
+        +visitar(heroe: Heroe, consola: Consola) void
+    }
+
+    class Ranking {
+        -registros: ArrayList~RegistroPuntaje~
+        +cargar() void
+        +agregar(r: RegistroPuntaje) void
+        -guardar() void
+        +ordenarPorPuntaje() void
+        +buscarMejorDe(jugador: String) RegistroPuntaje
+        +mostrar() void
+    }
+
+    class RegistroPuntaje {
+        -jugador: String
+        -heroe: String
+        -puntaje: int
+        -gano: boolean
+        +aLinea() String
+        +desdeLinea(linea: String)$ RegistroPuntaje
+    }
+
+    class Item {
+        -nombre: String
+        -tipo: String
+        -poder: int
+        -precio: int
+        +copiar() Item
+        +seLlama(texto: String) boolean
+        +getEfecto() String
+    }
+
+    class Personaje {
+        <<abstract>>
+        -nombre: String
+        -vidaMaxima: int
+        -vida: int
+        -ataque: int
+        -defensa: int
+        -probCritico: int
+        -probEsquivar: int
+        -turnosAturdido: int
+        -turnosVeneno: int
+        -defendiendo: boolean
+        +atacar(objetivo: Personaje) int
+        +golpear(obj: Personaje, mult: double, esquivable: boolean) int
+        +recibirDanio(danio: int, critico: boolean) int
+        +recibirDanioDirecto(danio: int) void
+        #alQuedarSinVida() void
+        +curar(cantidad: int) void
+        +aturdir(turnos: int) void
+        +envenenar(turnos: int, danio: int) void
+        +empezarTurno() boolean
+        +estaVivo() boolean
+        +getAtaqueEfectivo() int
+    }
+
+    class Heroe {
+        <<abstract>>
+        -energia: int
+        -nivel: int
+        -experiencia: int
+        -monedas: int
+        -inventario: ArrayList~Item~
+        -turnosPoderBloqueado: int
+        -turnosAtaqueReducido: int
+        -turnoExtra: boolean
+        +getPoderes()* String[]
+        +getCostoPoder(i: int)* int
+        +bloquearPoder(turnos: int) void
+        +reducirAtaque(turnos: int) void
+        #usarPoder(i: int, obj: Villano, c: Combate)* void
+        +validarPoder(i: int) void
+        +lanzarPoder(i: int, obj: Villano, c: Combate) void
+        +buscarItem(nombre: String) Item
+        +usarItem(nombre: String) void
+        +ordenarInventarioPorPoder() void
+        +ganarExperiencia(cantidad: int) void
+        +pagar(cantidad: int) void
+        +finDeTurno() void
+        +finDeRonda() void
+    }
+
+    class Villano {
+        <<abstract>>
+        -frase: String
+        -recompensaMonedas: int
+        -recompensaExperiencia: int
+        -enfurecido: boolean
+        +actuar(h: Heroe, c: Combate)* void
+        +interceptarAtaque(h: Heroe, c: Consola) boolean
+        +alSerAtacado(h: Heroe, fuePoder: boolean) void
+        +companeroCaido(caido: Villano) void
+        +alSerDerrotado(h: Heroe) void
+        #enfurecer(atk: int, def: int) void
+    }
+
+    class Thiago {
+        -cargas: int
+        +atacar(obj: Personaje) int
+        +recibirDanio(d: int, crit: boolean) int
+    }
+    class Patus
+    class Edisson {
+        -fenixUsado: boolean
+        #alQuedarSinVida() void
+    }
+    class Jose {
+        -debilitados: ArrayList~Villano~
+    }
+    class Mayra {
+        -esperaTiempo: int
+        +poderEsOfensivo(i: int) boolean
+        +validarPoder(i: int) void
+    }
+
+    class Ruben {
+        -turnosParaDiscurso: int
+    }
+    class FrauAnaMaria {
+        -turnosIlusion: int
+        -esperaIlusion: int
+        +interceptarAtaque(h: Heroe, c: Consola) boolean
+    }
+    class Cantinera {
+        -monedasRobadas: int
+        -turnosParaMenu: int
+        -ofrecerMenu(h: Heroe, c: Consola) void
+    }
+    class Sebas {
+        -yaCopio: boolean
+        -poderCopiado: String
+        +companeroCaido(caido: Villano) void
+    }
+    class Esteban {
+        +companeroCaido(caido: Villano) void
+    }
+    class Luciana {
+        -robados: ArrayList~Item~
+        -turnosParaRobar: int
+    }
+    class Meybel {
+        -curasUsadas: int
+    }
+    class Roger {
+        -turnosParaGolpe: int
+        -cansado: boolean
+    }
+    class Johan {
+        +alSerAtacado(h: Heroe, fuePoder: boolean) void
+    }
+    class JuanUbaldo
+    class ProfeDiana {
+        -faseDos: boolean
+        -recuperatorioUsado: boolean
+        -cargandoNotaFinal: boolean
+        -activarNucleo() void
+    }
+
+    %% Herencia
+    Exception <|-- AccionInvalidaException
+    Personaje <|-- Heroe
+    Personaje <|-- Villano
+    Heroe <|-- Thiago
+    Heroe <|-- Patus
+    Heroe <|-- Edisson
+    Heroe <|-- Jose
+    Heroe <|-- Mayra
+    Villano <|-- Ruben
+    Villano <|-- FrauAnaMaria
+    Villano <|-- Cantinera
+    Villano <|-- Sebas
+    Villano <|-- Esteban
+    Villano <|-- Luciana
+    Villano <|-- Meybel
+    Villano <|-- Roger
+    Villano <|-- Johan
+    Villano <|-- JuanUbaldo
+    Villano <|-- ProfeDiana
+
+    %% Relaciones
+    Main ..> Juego : crea
+    Juego *-- Consola
+    Juego *-- Ranking
+    Juego *-- Tienda
+    Juego --> "1" Heroe : heroe
+    Juego o-- "8" Parada : recorrido (Queue)
+    Juego ..> Combate : crea
+    Parada o-- "1..*" Villano
+    Combate --> "1" Heroe
+    Combate o-- "1..*" Villano : enemigos
+    Heroe o-- "0..*" Item : inventario
+    Tienda o-- "*" Item : productos
+    Ranking o-- "*" RegistroPuntaje
+    Ranking ..> AccionInvalidaException : maneja
+    Heroe ..> AccionInvalidaException : throws
+    Combate ..> AccionInvalidaException : maneja
