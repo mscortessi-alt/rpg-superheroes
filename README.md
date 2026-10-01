@@ -3,7 +3,7 @@
 Proyecto Integrador Final - Informatica I - UPA
 Grupo 8 - RPG por turnos - Superheroes
 
-Integrantes: Monique Salustre y _(nombre de tu pareja)_
+Integrantes: Monique Salustre y Helena Dominguez
 Profesor: Gustavo Galeano
 
 ## De que se trata
